@@ -1,11 +1,14 @@
 function getTimeRemaining(endtime) {
-  var t = Date.parse(endtime) - Date.parse(new Date());
+  var t = 1495876800 - new Date().getTime();
+  console.log('t', t);
   var seconds = Math.floor((t / 1000) % 60);
   var minutes = Math.floor((t / 1000 / 60) % 60);
   var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
   var days = Math.floor(t / (1000 * 60 * 60 * 24));
+  var weeks = days / 7;
   return {
     'total': t,
+    'weeks': weeks,
     'days': days,
     'hours': hours,
     'minutes': minutes,
@@ -15,6 +18,7 @@ function getTimeRemaining(endtime) {
 
 function initializeClock(id, endtime) {
   var clock = document.getElementById(id);
+  var weeksSpan = clock.querySelector('.weeks');
   var daysSpan = clock.querySelector('.days');
   var hoursSpan = clock.querySelector('.hours');
   var minutesSpan = clock.querySelector('.minutes');
@@ -23,6 +27,7 @@ function initializeClock(id, endtime) {
   function updateClock() {
     var t = getTimeRemaining(endtime);
 
+    weeksSpan.innerHTML = t.weeks;
     daysSpan.innerHTML = t.days;
     hoursSpan.innerHTML = ('0' + t.hours).slice(-2);
     minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
@@ -38,4 +43,5 @@ function initializeClock(id, endtime) {
 }
 
 var deadline = new Date(Date.parse(new Date(2017, 05, 27)));
-initializeClock('clockdiv', deadline);
+console.log(deadline, new Date(2017, 05, 27))
+initializeClock('clockdiv', new Date(2017, 05, 27));
